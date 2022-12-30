@@ -2,3 +2,4 @@
 **.a
 .vscode/
 .DS_Store
+.ccls_cache/
