@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/04 13:50:33 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:36:29 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,14 @@
 
 # define WIDTH 1280
 # define HEIGHT 960
+
+typedef struct s_coordinates
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_coordinates;
+
+t_coordinates	**parse_map(char *path);
 
 #endif
