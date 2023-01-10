@@ -6,12 +6,13 @@
 #    By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/30 15:09:01 by pschwarz          #+#    #+#              #
-#    Updated: 2023/01/10 13:14:21 by pschwarz         ###   ########.fr        #
+#    Updated: 2023/01/10 18:00:11 by pschwarz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
+#-fsanitize=address -g
 NAME = fdf
 LIBFT = lib/libft/libft.a
 MLX42 = lib/mlx42/libmlx42.a
@@ -24,7 +25,6 @@ all: $(NAME)
 
 $(NAME): dependencies $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) -o $(NAME) -I include -lglfw -L "$(HOME)/.brew/opt/glfw/lib/"
-
 
 dependencies:
 	git submodule update
