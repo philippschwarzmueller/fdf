@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/04 13:50:33 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:16:03 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 960
+
+char	**read_file(char *path);
 
 #endif
