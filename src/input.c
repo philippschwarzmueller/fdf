@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/10 18:00:02 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:33:56 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_coordinates	**map_coordinates(char **mapstring, int width, int height)
 	int				i;
 	char			**line_strings;
 
-	res = malloc((height * width * sizeof(t_coordinates *)) + 1);
+	res = malloc((height * width * sizeof(t_coordinates *)) + sizeof(void *));
 	if (!res)
 		return (NULL);
 	line = 0;
@@ -101,13 +101,13 @@ char	**read_map_from_file(char *path, int height)
 	char	*curr_str;
 	int		i;
 
-	contents = malloc(sizeof(char *) * height + 1);
+	contents = malloc(sizeof(char *) * height + (sizeof(void *)));
 	if (!contents)
 		return (NULL);
 	fd = open(path, O_RDONLY);
-	curr_str = " ";
 	i = 0;
-	while (curr_str != NULL)
+	curr_str = " ";
+	while (i < height && curr_str != NULL)
 	{
 		curr_str = get_next_line(fd);
 		contents[i] = curr_str;
