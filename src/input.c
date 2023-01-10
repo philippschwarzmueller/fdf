@@ -6,15 +6,15 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/10 13:15:33 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:26:16 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	count_newlines(int fd);
+int	count_newlines(char *path);
 
-char	**read_file(char *path)
+char	**read_map_from_file(char *path)
 {
 	char	**contents;
 	int		fd;
@@ -22,10 +22,10 @@ char	**read_file(char *path)
 	int		i;
 	int		lines;
 
-	fd = open(path, O_RDONLY);
-	lines = count_newlines(fd);
-	close(fd);
+	lines = count_newlines(path);
 	contents = malloc(sizeof(char *) * lines + 1);
+	if (!contents)
+		return (NULL);
 	fd = open(path, O_RDONLY);
 	curr_str = " ";
 	i = 0;
@@ -40,11 +40,13 @@ char	**read_file(char *path)
 	return (contents);
 }
 
-int	count_newlines(int fd)
+int	count_newlines(char *path)
 {
 	int		line_count;
+	int		fd;
 	char	*str_helper;
 
+	fd = open(path, O_RDONLY);
 	line_count = 0;
 	str_helper = " ";
 	while (str_helper != NULL)
@@ -52,5 +54,6 @@ int	count_newlines(int fd)
 		str_helper = get_next_line(fd);
 		line_count++;
 	}
+	close(fd);
 	return (line_count);
 }
