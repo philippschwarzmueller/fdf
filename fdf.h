@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 09:18:43 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:01:49 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,14 @@ typedef struct s_coordinates
 	int	z;
 }	t_coordinates;
 
-t_coordinates	**parse_map(char *path);
-void			draw_map(t_coordinates **map, int scale, mlx_t *mlx);
+typedef struct s_map
+{
+	t_coordinates	**map_coordinates;
+	int				width;
+	int				height;
+}	t_map;
+
+t_map	*parse_map(char *path);
+void	draw_map(t_map *map, int scale, mlx_t *mlx);
 
 #endif

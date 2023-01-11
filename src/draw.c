@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 10:44:20 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:00:51 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	draw_line(t_coordinates *start, t_coordinates *end, mlx_image_t *image,
 			int scale);
 
-void	draw_map(t_coordinates **map, int scale, mlx_t *mlx)
+void	draw_map(t_map *map, int scale, mlx_t *mlx)
 {
 	mlx_image_t	*drawn_map;
 	int			i;
@@ -24,11 +24,11 @@ void	draw_map(t_coordinates **map, int scale, mlx_t *mlx)
 	if (!drawn_map || (mlx_image_to_window(mlx, drawn_map, 0, 0) < 0))
 		return ;
 	i = 0;
-	while (map[i] != NULL && map[i + 1] != NULL)
+	while (map->map_coordinates[i] != NULL && map->map_coordinates[i + 1] != NULL)
 	{
-		if (map[i]->y < map[i + 1]->y)
+		if (map->map_coordinates[i]->y < map->map_coordinates[i + 1]->y)
 			i++;
-		draw_line(map[i], map[i + 1], drawn_map, scale);
+		draw_line(map->map_coordinates[i], map->map_coordinates[i + 1], drawn_map, scale);
 		i++;
 	}
 	ft_printf("%d\n", scale);
