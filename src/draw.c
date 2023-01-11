@@ -6,14 +6,15 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:49:35 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:51:33 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static void	draw_line(t_coordinates *start, t_coordinates *end,
-				mlx_image_t *image, int scale);
+static void				draw_line(t_coordinates start, t_coordinates end,
+							mlx_image_t *image);
+static t_coordinates	calc_iso(t_coordinates coordinates, int scale);
 
 void	draw_map(t_map *map, int scale, mlx_t *mlx)
 {
@@ -28,22 +29,21 @@ void	draw_map(t_map *map, int scale, mlx_t *mlx)
 	{
 		if (map->coordinates[i]->x == map->width)
 		{
-			draw_line(map->coordinates[i], map->coordinates[i + map->width],
-				drawn_map, scale);
+			draw_line(calc_iso(*map->coordinates[i], scale), calc_iso(*map->coordinates[i + map->width], scale),
+				drawn_map);
 			i++;
 		}
 		if (map->coordinates[i]->y < map->height)
-			draw_line(map->coordinates[i], map->coordinates[i + map->width],
-				drawn_map, scale);
-		draw_line(map->coordinates[i], map->coordinates[i + 1], drawn_map,
-			scale);
+			draw_line(calc_iso(*map->coordinates[i], scale), calc_iso(*map->coordinates[i + map->width], scale),
+				drawn_map);
+		draw_line(calc_iso(*map->coordinates[i], scale), calc_iso(*map->coordinates[i + 1], scale), drawn_map);
 		i++;
 	}
 	ft_printf("%d\n", scale);
 }
 
-static void	draw_line(t_coordinates *start, t_coordinates *end,
-				mlx_image_t *image, int scale)
+static void	draw_line(t_coordinates start, t_coordinates end,
+				mlx_image_t *image)
 {
 	double	delta_x;
 	double	delta_y;
@@ -51,13 +51,14 @@ static void	draw_line(t_coordinates *start, t_coordinates *end,
 	double	pixel_x;
 	double	pixel_y;
 
-	delta_x = end->x * scale - start->x * scale;
-	delta_y = end->y * scale - start->y * scale;
+	ft_printf("On column: %d On line: %d\n", start.x, start.y);
+	delta_x = end.x - start.x;
+	delta_y = end.y - start.y;
 	pixels = sqrt((delta_x * delta_x) + (delta_y * delta_y));
 	delta_x /= pixels;
 	delta_y /= pixels;
-	pixel_x = start->x * scale;
-	pixel_y = end->y * scale;
+	pixel_x = start.x;
+	pixel_y = start.y;
 	while (pixels)
 	{
 		mlx_put_pixel(image, pixel_x, pixel_y, 0xB7BDF8FF);
@@ -65,4 +66,13 @@ static void	draw_line(t_coordinates *start, t_coordinates *end,
 		pixel_y += delta_y;
 		--pixels;
 	}
+}
+
+static t_coordinates	calc_iso(t_coordinates coordinates, int scale)
+{
+	t_coordinates	res;
+
+	res.x = coordinates.x * scale;
+	res.y = coordinates.y * scale;
+	return (res);
 }
