@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 15:51:33 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:56:50 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ void	draw_map(t_map *map, int scale, mlx_t *mlx)
 	{
 		if (map->coordinates[i]->x == map->width)
 		{
-			draw_line(calc_iso(*map->coordinates[i], scale), calc_iso(*map->coordinates[i + map->width], scale),
-				drawn_map);
+			draw_line(calc_iso(*map->coordinates[i], scale),
+				calc_iso(*map->coordinates[i + map->width], scale), drawn_map);
 			i++;
 		}
 		if (map->coordinates[i]->y < map->height)
-			draw_line(calc_iso(*map->coordinates[i], scale), calc_iso(*map->coordinates[i + map->width], scale),
-				drawn_map);
-		draw_line(calc_iso(*map->coordinates[i], scale), calc_iso(*map->coordinates[i + 1], scale), drawn_map);
+			draw_line(calc_iso(*map->coordinates[i], scale),
+				calc_iso(*map->coordinates[i + map->width], scale), drawn_map);
+		draw_line(calc_iso(*map->coordinates[i], scale),
+			calc_iso(*map->coordinates[i + 1], scale), drawn_map);
 		i++;
 	}
 	ft_printf("%d\n", scale);
