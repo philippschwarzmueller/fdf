@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:20:20 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:49:35 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,15 @@ void	draw_map(t_map *map, int scale, mlx_t *mlx)
 	i = 0;
 	while (map->coordinates[i] != NULL && map->coordinates[i + 1] != NULL)
 	{
-		if (map->coordinates[i]->y < map->coordinates[i + 1]->y)
+		if (map->coordinates[i]->x == map->width)
+		{
+			draw_line(map->coordinates[i], map->coordinates[i + map->width],
+				drawn_map, scale);
 			i++;
+		}
+		if (map->coordinates[i]->y < map->height)
+			draw_line(map->coordinates[i], map->coordinates[i + map->width],
+				drawn_map, scale);
 		draw_line(map->coordinates[i], map->coordinates[i + 1], drawn_map,
 			scale);
 		i++;

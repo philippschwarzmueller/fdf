@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:15:27 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:41:19 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_map	*parse_map(char *path)
 	res->height = count_newlines(path);
 	mapstring = read_file_to_strings(path, res->height);
 	res->width = count_words(mapstring[0]);
-	res = malloc((res->height * res->width
+	res->coordinates = malloc((res->height * res->width
 				* sizeof(t_coordinates *)) + sizeof(void *));
 	if (!res)
 		return (free(mapstring), NULL);
