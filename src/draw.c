@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 10:25:21 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:44:20 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_line(t_coordinates *start, t_coordinates *end, mlx_image_t *image,
 	pixel_y = end->y * scale;
 	while (pixels)
 	{
-		mlx_put_pixel(image, pixel_x, pixel_y, 0xFFFFFF);
+		mlx_put_pixel(image, pixel_x, pixel_y, 0xB7BDF8FF);
 		pixel_x += delta_x;
 		pixel_y += delta_y;
 		--pixels;
