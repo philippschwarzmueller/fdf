@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:01:49 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:13:02 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_coordinates
 
 typedef struct s_map
 {
-	t_coordinates	**map_coordinates;
+	t_coordinates	**coordinates;
 	int				width;
 	int				height;
 }	t_map;
