@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/10 15:36:29 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 08:54:59 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ typedef struct s_coordinates
 }	t_coordinates;
 
 t_coordinates	**parse_map(char *path);
+void			draw_map(t_coordinates **map, int scale, mlx_t *mlx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 08:42:34 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 08:55:08 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int	main(int argc, char **argv)
 		return (0);
 	i = 0;
 	coordinate_map = parse_map(argv[argc - 1]);
-	mlx = init_mlx();
 	while (coordinate_map[i] != NULL)
 	{
 		ft_printf("x: %d, y: %d, z: %d\n", coordinate_map[i]->x,
 			coordinate_map[i]->y, coordinate_map[i]->z);
 		i++;
 	}
+	mlx = init_mlx();
+	draw_map(coordinate_map, 10, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	free(coordinate_map);
