@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/10 15:36:29 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:13:02 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "./lib/libft/libft.h"
 # include "./lib/mlx42/include/MLX42/MLX42.h"
 # include <fcntl.h>
+# include <math.h>
 
 # define WIDTH 1280
 # define HEIGHT 960
@@ -27,6 +28,14 @@ typedef struct s_coordinates
 	int	z;
 }	t_coordinates;
 
-t_coordinates	**parse_map(char *path);
+typedef struct s_map
+{
+	t_coordinates	**coordinates;
+	int				width;
+	int				height;
+}	t_map;
+
+t_map	*parse_map(char *path);
+void	draw_map(t_map *map, int scale, mlx_t *mlx);
 
 #endif

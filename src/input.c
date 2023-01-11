@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 08:28:42 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:41:19 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,32 @@ static char	**read_file_to_strings(char *path, int height);
 static int	count_newlines(char *path);
 static int	count_words(char const *s);
 
-t_coordinates	**parse_map(char *path)
+t_map	*parse_map(char *path)
 {
-	t_coordinates	**res;
-	int				map_height;
-	char			**mapstring;
-	int				map_width;
+	t_map	*res;
+	char	**mapstring;
 
-	map_height = count_newlines(path);
-	mapstring = read_file_to_strings(path, map_height);
-	map_width = count_words(mapstring[0]);
-	res = malloc((map_height * map_width * sizeof(t_coordinates *))
-			+ sizeof(void *));
+	res = malloc(sizeof(t_map));
+	if (!res)
+		return (NULL);
+	res->height = count_newlines(path);
+	mapstring = read_file_to_strings(path, res->height);
+	res->width = count_words(mapstring[0]);
+	res->coordinates = malloc((res->height * res->width
+				* sizeof(t_coordinates *)) + sizeof(void *));
 	if (!res)
 		return (free(mapstring), NULL);
-	populate_map(mapstring, res);
+	populate_map(mapstring, res->coordinates);
 	free(mapstring);
 	return (res);
 }
 
 static void	populate_map(char **mapstring, t_coordinates **map)
 {
-	int				line;
-	int				column;
-	int				i;
-	char			**line_strings;
+	int		line;
+	int		column;
+	int		i;
+	char	**line_strings;
 
 	line = 0;
 	column = 0;
