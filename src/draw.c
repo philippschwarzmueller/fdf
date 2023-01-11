@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 15:56:50 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 16:03:06 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,12 @@ static void	draw_line(t_coordinates start, t_coordinates end,
 static t_coordinates	calc_iso(t_coordinates coordinates, int scale)
 {
 	t_coordinates	res;
+	int				x;
+	int				y;
 
-	res.x = coordinates.x * scale;
-	res.y = coordinates.y * scale;
+	x = coordinates.x * scale;
+	y = coordinates.y * scale;
+	res.x = (x - y) * cos(0.45);
+	res.y = (-coordinates.z + x + y) * cos(0.45);
 	return (res);
 }
