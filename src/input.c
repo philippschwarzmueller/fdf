@@ -6,16 +6,16 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/10 18:33:56 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 08:28:42 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int				count_newlines(char *path);
-char			**read_map_from_file(char *path, int height);
-t_coordinates	**map_coordinates(char **mapstring, int width, int height);
-static int		count_words(char const *s);
+static void	populate_map(char **mapstring, t_coordinates **map);
+static char	**read_file_to_strings(char *path, int height);
+static int	count_newlines(char *path);
+static int	count_words(char const *s);
 
 t_coordinates	**parse_map(char *path)
 {
@@ -25,52 +25,24 @@ t_coordinates	**parse_map(char *path)
 	int				map_width;
 
 	map_height = count_newlines(path);
-	mapstring = read_map_from_file(path, map_height);
+	mapstring = read_file_to_strings(path, map_height);
 	map_width = count_words(mapstring[0]);
-	ft_printf("map_height: %d \nmap_width: %d \n", map_height, map_width);
-	res = map_coordinates(mapstring, map_width, map_height);
-	free(mapstring);
+	res = malloc((map_height * map_width * sizeof(t_coordinates *))
+			+ sizeof(void *));
 	if (!res)
-		return (NULL);
+		return (free(mapstring), NULL);
+	populate_map(mapstring, res);
+	free(mapstring);
 	return (res);
 }
 
-//TODO fucntion needs to be cleaned up
-static int	count_words(char const *s)
+static void	populate_map(char **mapstring, t_coordinates **map)
 {
-	int		res;
-	int		i;
-	char	*trimmed_s;
-
-	i = 0;
-	res = 0;
-	trimmed_s = ft_strtrim(s, "\n");
-	while (trimmed_s[i] != '\0')
-	{
-		if (trimmed_s[i] == ' ')
-			i++;
-		else
-		{
-			res++;
-			while (trimmed_s[i] && trimmed_s[i] != ' ')
-				i++;
-		}
-	}
-	ft_printf("%d\n", res);
-	return (res);
-}
-
-t_coordinates	**map_coordinates(char **mapstring, int width, int height)
-{
-	t_coordinates	**res;
 	int				line;
 	int				column;
 	int				i;
 	char			**line_strings;
 
-	res = malloc((height * width * sizeof(t_coordinates *)) + sizeof(void *));
-	if (!res)
-		return (NULL);
 	line = 0;
 	column = 0;
 	i = 0;
@@ -79,10 +51,10 @@ t_coordinates	**map_coordinates(char **mapstring, int width, int height)
 		line_strings = ft_split(ft_strtrim(mapstring[line], "\n"), ' ');
 		while (line_strings[column] != NULL)
 		{
-			res[i] = malloc(sizeof(t_coordinates) * 1);
-			res[i]->x = column + 1;
-			res[i]->y = line + 1;
-			res[i]->z = ft_atoi(line_strings[column]);
+			map[i] = malloc(sizeof(t_coordinates) * 1);
+			map[i]->x = column + 1;
+			map[i]->y = line + 1;
+			map[i]->z = ft_atoi(line_strings[column]);
 			column++;
 			i++;
 		}
@@ -90,11 +62,10 @@ t_coordinates	**map_coordinates(char **mapstring, int width, int height)
 		line++;
 	}
 	free(line_strings);
-	res[i] = NULL;
-	return (res);
+	map[i] = NULL;
 }
 
-char	**read_map_from_file(char *path, int height)
+static char	**read_file_to_strings(char *path, int height)
 {
 	char	**contents;
 	int		fd;
@@ -118,7 +89,7 @@ char	**read_map_from_file(char *path, int height)
 	return (contents);
 }
 
-int	count_newlines(char *path)
+static int	count_newlines(char *path)
 {
 	int		line_count;
 	int		fd;
@@ -135,4 +106,27 @@ int	count_newlines(char *path)
 	}
 	close(fd);
 	return (line_count);
+}
+
+static int	count_words(char const *s)
+{
+	int		res;
+	int		i;
+	char	*trimmed_s;
+
+	i = 0;
+	res = 0;
+	trimmed_s = ft_strtrim(s, "\n");
+	while (trimmed_s[i] != '\0')
+	{
+		if (trimmed_s[i] == ' ')
+			i++;
+		else
+		{
+			res++;
+			while (trimmed_s[i] && trimmed_s[i] != ' ')
+				i++;
+		}
+	}
+	return (res);
 }
