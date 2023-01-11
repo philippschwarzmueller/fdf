@@ -6,14 +6,14 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:15:45 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 11:20:20 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-void	draw_line(t_coordinates *start, t_coordinates *end, mlx_image_t *image,
-			int scale);
+static void	draw_line(t_coordinates *start, t_coordinates *end,
+				mlx_image_t *image, int scale);
 
 void	draw_map(t_map *map, int scale, mlx_t *mlx)
 {
@@ -35,8 +35,8 @@ void	draw_map(t_map *map, int scale, mlx_t *mlx)
 	ft_printf("%d\n", scale);
 }
 
-void	draw_line(t_coordinates *start, t_coordinates *end, mlx_image_t *image,
-			int scale)
+static void	draw_line(t_coordinates *start, t_coordinates *end,
+				mlx_image_t *image, int scale)
 {
 	double	delta_x;
 	double	delta_y;
