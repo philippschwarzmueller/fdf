@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 08:54:59 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 09:18:43 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "./lib/libft/libft.h"
 # include "./lib/mlx42/include/MLX42/MLX42.h"
 # include <fcntl.h>
+# include <math.h>
 
 # define WIDTH 1280
 # define HEIGHT 960

@@ -6,11 +6,13 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 09:07:41 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/11 10:21:33 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+void	draw_line(t_coordinates *start, t_coordinates *end, mlx_image_t *image);
 
 void	draw_map(t_coordinates **map, int scale, mlx_t *mlx)
 {
@@ -21,10 +23,36 @@ void	draw_map(t_coordinates **map, int scale, mlx_t *mlx)
 	if (!drawn_map || (mlx_image_to_window(mlx, drawn_map, 0, 0) < 0))
 		return ;
 	i = 0;
-	while (map[i] != NULL)
+	while (map[i] != NULL && map[i + 1] != NULL)
 	{
-		mlx_put_pixel(drawn_map, map[i]->x * scale, map[i]->y * scale,
-			0xFFFFFF);
+		if (map[i]->y < map[i + 1]->y)
+			i++;
+		draw_line(map[i], map[i + 1], drawn_map);
 		i++;
+	}
+	ft_printf("%d\n", scale);
+}
+
+void	draw_line(t_coordinates *start, t_coordinates *end, mlx_image_t *image)
+{
+	double	delta_x;
+	double	delta_y;
+	int		pixels;
+	double	pixel_x;
+	double	pixel_y;
+
+	delta_x = end->x * 10 - start->x * 10;
+	delta_y = end->y * 10 - start->y * 10;
+	pixels = sqrt((delta_x * delta_x) + (delta_y * delta_y));
+	delta_x /= pixels;
+	delta_y /= pixels;
+	pixel_x = start->x * 10;
+	pixel_y = end->y * 10;
+	while (pixels)
+	{
+		mlx_put_pixel(image, pixel_x, pixel_y, 0xFFFFFF);
+		pixel_x += delta_x;
+		pixel_y += delta_y;
+		--pixels;
 	}
 }
