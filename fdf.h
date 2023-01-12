@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 11:13:02 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:38:23 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,14 @@ typedef struct s_map
 	int				height;
 }	t_map;
 
+typedef struct s_settings
+{
+	t_map		*map;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+}	t_settings;
+
 t_map	*parse_map(char *path);
-void	draw_map(t_map *map, int scale, mlx_t *mlx);
+void	draw_map(t_map *map, int scale, mlx_t *mlx, t_settings settings);
 
 #endif

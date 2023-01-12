@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/11 17:31:11 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:37:59 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_coordinates	calc_iso(t_coordinates coordinates, int scale,
 							int start_x, int start_y);
 static int				calculate_center(int axis_size, char axis);
 
-void	draw_map(t_map *map, int scale, mlx_t *mlx)
+void	draw_map(t_map *map, int scale, mlx_t *mlx, t_settings settings)
 {
 	mlx_image_t	*drawn_map;
 	int			i;
@@ -32,6 +32,7 @@ void	draw_map(t_map *map, int scale, mlx_t *mlx)
 		(mlx_image_to_window(mlx, drawn_map, 0, 0) < 0))
 		return ;
 	i = 0;
+	settings.img = drawn_map;
 	while (map->coordinates[i] != NULL && map->coordinates[i + 1] != NULL)
 	{
 		if (map->coordinates[i]->x == map->width)
