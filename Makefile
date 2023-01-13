@@ -6,7 +6,7 @@
 #    By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/30 15:09:01 by pschwarz          #+#    #+#              #
-#    Updated: 2023/01/11 08:35:05 by pschwarz         ###   ########.fr        #
+#    Updated: 2023/01/13 17:50:11 by pschwarz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,9 @@ SRC = src/fdf.c src/input.c src/draw.c
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
+
+macbook: dependencies $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) -o $(NAME) -lglfw
 
 $(NAME): dependencies $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) -o $(NAME) -I include -lglfw -L "$(HOME)/.brew/opt/glfw/lib/"
