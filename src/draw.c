@@ -18,37 +18,34 @@ static t_coordinates	calc_iso(t_coordinates coordinates, int scale,
 							int start_x, int start_y);
 static int				calculate_center(int axis_size, char axis);
 
-void	draw_map(t_map *map, int scale, mlx_t *mlx, t_settings settings)
+void	draw_map(t_map *map, int scale, mlx_t *mlx, t_pref pref)
 {
-	mlx_image_t	*drawn_map;
-	int			i;
-	int			center_x;
-	int			center_y;
+	int				i;
+	t_coordinates	iso_start;
 
-	center_x = calculate_center(map->width, 'x');
-	center_y = calculate_center(map->height, 'y');
-	drawn_map = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!drawn_map ||
-		(mlx_image_to_window(mlx, drawn_map, 0, 0) < 0))
+	pref.offset_x = calculate_center(map->width, 'x');
+	pref.offset_y = calculate_center(map->height, 'y');
+	pref.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!pref.img || (mlx_image_to_window(mlx, pref.img, 0, 0) < 0))
 		return ;
 	i = 0;
-	settings.img = drawn_map;
 	while (map->coordinates[i] != NULL && map->coordinates[i + 1] != NULL)
 	{
+		iso_start = calc_iso(*map->coordinates[i], scale, pref.offset_x, pref.offset_y);
 		if (map->coordinates[i]->x == map->width)
 		{
-			draw_line(calc_iso(*map->coordinates[i], scale, center_x, center_y),
-				calc_iso(*map->coordinates[i + map->width], scale, center_x, center_y), drawn_map);
+			draw_line(iso_start, calc_iso(*map->coordinates[i + map->width],
+					scale, pref.offset_x, pref.offset_y), pref.img);
 			i++;
+			iso_start = calc_iso(*map->coordinates[i], scale, pref.offset_x, pref.offset_y);
 		}
 		if (map->coordinates[i]->y < map->height)
-			draw_line(calc_iso(*map->coordinates[i], scale, center_x, center_y),
-				calc_iso(*map->coordinates[i + map->width], scale, center_x, center_y), drawn_map);
-		draw_line(calc_iso(*map->coordinates[i], scale, center_x, center_y),
-			calc_iso(*map->coordinates[i + 1], scale, center_x, center_y), drawn_map);
+			draw_line(iso_start, calc_iso(*map->coordinates[i + map->width],
+					scale, pref.offset_x, pref.offset_y), pref.img);
+		draw_line(iso_start, calc_iso(*map->coordinates[i + 1], scale,
+				pref.offset_x, pref.offset_y), pref.img);
 		i++;
 	}
-	ft_printf("%d\n", scale);
 }
 
 static int	calculate_center(int axis_size, char axis)

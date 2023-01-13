@@ -17,16 +17,16 @@ void	close_hook(mlx_key_data_t keydata, void *param);
 
 int	main(int argc, char **argv)
 {
-	int			i;
-	t_map		*map;
-	mlx_t		*mlx;
-	t_settings	settings;
+	int		i;
+	t_map	*map;
+	mlx_t	*mlx;
+	t_pref	pref;
 
 	if (argc != 2)
 		return (0);
 	i = 0;
 	map = parse_map(argv[argc - 1]);
-	settings.map = map;
+	pref.map = map;
 	while (map->coordinates[i] != NULL)
 	{
 		ft_printf("x: %d, y: %d, z: %d\n", map->coordinates[i]->x,
@@ -34,9 +34,9 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	mlx = init_mlx();
-	settings.mlx = mlx;
-	draw_map(map, 10, mlx, settings);
-	mlx_key_hook(mlx, &close_hook, &settings);
+	pref.mlx = mlx;
+	draw_map(map, 10, mlx, pref);
+	mlx_key_hook(mlx, &close_hook, &pref);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	free(map->coordinates);
@@ -54,12 +54,12 @@ mlx_t	*init_mlx(void)
 
 void	close_hook(mlx_key_data_t keydata, void *param)
 {
-	t_settings	*settings;
+	t_pref	*pref;
 
-	settings = (t_settings *) param;
+	pref = (t_pref *) param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
-		mlx_delete_image(settings->mlx, settings->img);
-		mlx_close_window(settings->mlx);
+		mlx_delete_image(pref->mlx, pref->img);
+		mlx_close_window(pref->mlx);
 	}
 }

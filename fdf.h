@@ -35,14 +35,16 @@ typedef struct s_map
 	int				height;
 }	t_map;
 
-typedef struct s_settings
+typedef struct s_pref
 {
 	t_map		*map;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
-}	t_settings;
+	int			offset_x;
+	int			offset_y;
+}	t_pref;
 
 t_map	*parse_map(char *path);
-void	draw_map(t_map *map, int scale, mlx_t *mlx, t_settings settings);
+void	draw_map(t_map *map, int scale, mlx_t *mlx, t_pref pref);
 
 #endif
