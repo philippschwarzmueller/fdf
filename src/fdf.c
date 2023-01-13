@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/12 10:44:06 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:47:41 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ void	close_hook(mlx_key_data_t keydata, void *param);
 
 int	main(int argc, char **argv)
 {
-	int		i;
 	mlx_t	*mlx;
 	t_pref	pref;
 
 	if (argc != 2)
 		return (0);
-	i = 0;
 	pref.map = parse_map(argv[argc - 1]);
 	mlx = init_mlx();
 	pref.mlx = mlx;
