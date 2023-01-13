@@ -18,29 +18,22 @@ void	close_hook(mlx_key_data_t keydata, void *param);
 int	main(int argc, char **argv)
 {
 	int		i;
-	t_map	*map;
 	mlx_t	*mlx;
 	t_pref	pref;
 
 	if (argc != 2)
 		return (0);
 	i = 0;
-	map = parse_map(argv[argc - 1]);
-	pref.map = map;
-	while (map->coordinates[i] != NULL)
-	{
-		ft_printf("x: %d, y: %d, z: %d\n", map->coordinates[i]->x,
-			map->coordinates[i]->y, map->coordinates[i]->z);
-		i++;
-	}
+	pref.map = parse_map(argv[argc - 1]);
 	mlx = init_mlx();
 	pref.mlx = mlx;
-	draw_map(map, 10, mlx, pref);
+	pref.scale = 10;
+	draw_map(pref.map, mlx, pref);
 	mlx_key_hook(mlx, &close_hook, &pref);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	free(map->coordinates);
-	free(map);
+	free(pref.map->coords);
+	free(pref.map);
 	return (0);
 }
 

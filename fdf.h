@@ -30,7 +30,7 @@ typedef struct s_coordinates
 
 typedef struct s_map
 {
-	t_coordinates	**coordinates;
+	t_coordinates	**coords;
 	int				width;
 	int				height;
 }	t_map;
@@ -40,11 +40,12 @@ typedef struct s_pref
 	t_map		*map;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
-	int			offset_x;
-	int			offset_y;
+	int			scale;
+	int			off_x;
+	int			off_y;
 }	t_pref;
 
 t_map	*parse_map(char *path);
-void	draw_map(t_map *map, int scale, mlx_t *mlx, t_pref pref);
+void	draw_map(t_map *map, mlx_t *mlx, t_pref pref);
 
 #endif

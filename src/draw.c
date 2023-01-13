@@ -12,40 +12,21 @@
 
 #include "../fdf.h"
 
+static void				project(t_map *map, t_pref pref);
 static void				draw_line(t_coordinates start, t_coordinates end,
 							mlx_image_t *image);
-static t_coordinates	calc_iso(t_coordinates coordinates, int scale,
+static t_coordinates	iso(t_coordinates coordinates, int scale,
 							int start_x, int start_y);
 static int				calculate_center(int axis_size, char axis);
 
-void	draw_map(t_map *map, int scale, mlx_t *mlx, t_pref pref)
+void	draw_map(t_map *map, mlx_t *mlx, t_pref pref)
 {
-	int				i;
-	t_coordinates	iso_start;
-
-	pref.offset_x = calculate_center(map->width, 'x');
-	pref.offset_y = calculate_center(map->height, 'y');
+	pref.off_x = calculate_center(map->width, 'x');
+	pref.off_y = calculate_center(map->height, 'y');
 	pref.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!pref.img || (mlx_image_to_window(mlx, pref.img, 0, 0) < 0))
 		return ;
-	i = 0;
-	while (map->coordinates[i] != NULL && map->coordinates[i + 1] != NULL)
-	{
-		iso_start = calc_iso(*map->coordinates[i], scale, pref.offset_x, pref.offset_y);
-		if (map->coordinates[i]->x == map->width)
-		{
-			draw_line(iso_start, calc_iso(*map->coordinates[i + map->width],
-					scale, pref.offset_x, pref.offset_y), pref.img);
-			i++;
-			iso_start = calc_iso(*map->coordinates[i], scale, pref.offset_x, pref.offset_y);
-		}
-		if (map->coordinates[i]->y < map->height)
-			draw_line(iso_start, calc_iso(*map->coordinates[i + map->width],
-					scale, pref.offset_x, pref.offset_y), pref.img);
-		draw_line(iso_start, calc_iso(*map->coordinates[i + 1], scale,
-				pref.offset_x, pref.offset_y), pref.img);
-		i++;
-	}
+	project(pref.map, pref);
 }
 
 static int	calculate_center(int axis_size, char axis)
@@ -58,6 +39,31 @@ static int	calculate_center(int axis_size, char axis)
 	else if (axis == 'y')
 		res = (HEIGHT / 2) - (axis_size / 2);
 	return (res);
+}
+
+static void	project(t_map *map, t_pref pref)
+{
+	int				i;
+	t_coordinates	isostart;
+
+	i = 0;
+	while (map->coords[i] != NULL && map->coords[i + 1] != NULL)
+	{
+		isostart = iso(*map->coords[i], pref.scale, pref.off_x, pref.off_y);
+		if (map->coords[i]->x == map->width)
+		{
+			draw_line(isostart, iso(*map->coords[i + map->width], pref.scale,
+					pref.off_x, pref.off_y), pref.img);
+			i++;
+			isostart = iso(*map->coords[i], pref.scale, pref.off_x, pref.off_y);
+		}
+		if (map->coords[i]->y < map->height)
+			draw_line(isostart, iso(*map->coords[i + map->width], pref.scale,
+					pref.off_x, pref.off_y), pref.img);
+		draw_line(isostart, iso(*map->coords[i + 1], pref.scale, pref.off_x,
+				pref.off_y), pref.img);
+		i++;
+	}
 }
 
 static void	draw_line(t_coordinates start, t_coordinates end,
@@ -87,7 +93,7 @@ static void	draw_line(t_coordinates start, t_coordinates end,
 	}
 }
 
-static t_coordinates	calc_iso(t_coordinates coordinates, int scale,
+static t_coordinates	iso(t_coordinates coordinates, int scale,
 							int start_x, int start_y)
 {
 	t_coordinates	res;
