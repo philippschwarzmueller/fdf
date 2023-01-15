@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/13 17:47:41 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:49:11 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 mlx_t	*init_mlx(void);
 void	close_hook(mlx_key_data_t keydata, void *param);
+void	key_bindings(void *tmp);
 
 int	main(int argc, char **argv)
 {
@@ -27,12 +28,28 @@ int	main(int argc, char **argv)
 	pref.mlx = mlx;
 	pref.scale = 10;
 	draw_map(pref.map, mlx, pref);
-	mlx_key_hook(mlx, &close_hook, &pref);
+	//mlx_key_hook(mlx, &close_hook, &pref);
+	mlx_loop_hook(mlx, &key_bindings, &pref);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	free(pref.map->coords);
 	free(pref.map);
 	return (0);
+}
+
+void	key_bindings(void *tmp)
+{
+	t_pref	*pref;
+
+	pref = (t_pref *) tmp;
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_J))
+		move(MLX_KEY_J, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_K))
+		move(MLX_KEY_K, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_H))
+		move(MLX_KEY_H, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_L))
+		move(MLX_KEY_L, pref);
 }
 
 mlx_t	*init_mlx(void)

@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/12 10:37:59 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/15 19:50:44 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int				calculate_center(int axis_size, char axis);
 
 void	draw_map(t_map *map, mlx_t *mlx, t_pref pref)
 {
+	ft_printf("drawing map with offset x: %d y: %d\n", pref.off_x, pref.off_y);
 	pref.off_x = calculate_center(map->width, 'x');
 	pref.off_y = calculate_center(map->height, 'y');
 	pref.img = mlx_new_image(mlx, WIDTH, HEIGHT);
@@ -31,13 +32,13 @@ void	draw_map(t_map *map, mlx_t *mlx, t_pref pref)
 
 static int	calculate_center(int axis_size, char axis)
 {
-	int	res;
+	long	res;
 
 	res = 0;
 	if (axis == 'x')
-		res = (WIDTH / 2) - (axis_size / 2);
+		res = (WIDTH / 2) + axis_size;
 	else if (axis == 'y')
-		res = (HEIGHT / 2) - (axis_size / 2);
+		res = (HEIGHT / 2) + axis_size;
 	return (res);
 }
 
