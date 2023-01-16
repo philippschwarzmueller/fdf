@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/12 10:38:23 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/15 18:43:43 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_pref
 }	t_pref;
 
 t_map	*parse_map(char *path);
-void	draw_map(t_map *map, mlx_t *mlx, t_pref pref);
+void	draw_map(t_pref pref);
+void	move(int key, t_pref *pref);
+void	zoom(int key, t_pref *pref);
 
 #endif

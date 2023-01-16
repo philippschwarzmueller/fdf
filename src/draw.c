@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/12 10:37:59 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/15 19:50:44 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ static t_coordinates	iso(t_coordinates coordinates, int scale,
 							int start_x, int start_y);
 static int				calculate_center(int axis_size, char axis);
 
-void	draw_map(t_map *map, mlx_t *mlx, t_pref pref)
+void	draw_map(t_pref pref)
 {
-	pref.off_x = calculate_center(map->width, 'x');
-	pref.off_y = calculate_center(map->height, 'y');
-	pref.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!pref.img || (mlx_image_to_window(mlx, pref.img, 0, 0) < 0))
-		return ;
+	pref.off_x = calculate_center(pref.off_x, 'x');
+	pref.off_y = calculate_center(pref.off_y, 'y');
+	ft_printf("drawing map with offset x: %d y: %d\n", pref.off_x, pref.off_y);
+	ft_bzero(pref.img->pixels, WIDTH * HEIGHT * 4);
 	project(pref.map, pref);
 }
 
@@ -35,9 +34,9 @@ static int	calculate_center(int axis_size, char axis)
 
 	res = 0;
 	if (axis == 'x')
-		res = (WIDTH / 2) - (axis_size / 2);
+		res = (WIDTH / 2) + axis_size;
 	else if (axis == 'y')
-		res = (HEIGHT / 2) - (axis_size / 2);
+		res = (HEIGHT / 2) + axis_size;
 	return (res);
 }
 
