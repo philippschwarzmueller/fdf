@@ -15,12 +15,22 @@
 void	move(int key, t_pref *pref)
 {
 	if (key == MLX_KEY_J)
-		pref->off_y += 10;
-	else if (key == MLX_KEY_K)
 		pref->off_y -= 10;
+	else if (key == MLX_KEY_K)
+		pref->off_y += 10;
 	else if (key == MLX_KEY_H)
-		pref->off_x -= 10;
-	else if (key == MLX_KEY_L)
 		pref->off_x += 10;
-	draw_map(pref->map, pref->mlx, *pref);
+	else if (key == MLX_KEY_L)
+		pref->off_x -= 10;
+	draw_map(*pref);
+}
+
+void	zoom(int key, t_pref *pref)
+{
+	if (key == MLX_KEY_LEFT_SHIFT)
+		pref->scale += 1;
+	if (key == MLX_KEY_RIGHT_SHIFT)
+		if (pref->scale > 0)
+			pref->scale -= 1;
+	draw_map(*pref);
 }

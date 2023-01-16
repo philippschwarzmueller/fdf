@@ -19,20 +19,18 @@ static t_coordinates	iso(t_coordinates coordinates, int scale,
 							int start_x, int start_y);
 static int				calculate_center(int axis_size, char axis);
 
-void	draw_map(t_map *map, mlx_t *mlx, t_pref pref)
+void	draw_map(t_pref pref)
 {
+	pref.off_x = calculate_center(pref.off_x, 'x');
+	pref.off_y = calculate_center(pref.off_y, 'y');
 	ft_printf("drawing map with offset x: %d y: %d\n", pref.off_x, pref.off_y);
-	pref.off_x = calculate_center(map->width, 'x');
-	pref.off_y = calculate_center(map->height, 'y');
-	pref.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	if (!pref.img || (mlx_image_to_window(mlx, pref.img, 0, 0) < 0))
-		return ;
+	ft_bzero(pref.img->pixels, WIDTH * HEIGHT * 4);
 	project(pref.map, pref);
 }
 
 static int	calculate_center(int axis_size, char axis)
 {
-	long	res;
+	int	res;
 
 	res = 0;
 	if (axis == 'x')

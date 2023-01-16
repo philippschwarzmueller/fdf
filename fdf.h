@@ -46,7 +46,8 @@ typedef struct s_pref
 }	t_pref;
 
 t_map	*parse_map(char *path);
-void	draw_map(t_map *map, mlx_t *mlx, t_pref pref);
+void	draw_map(t_pref pref);
 void	move(int key, t_pref *pref);
+void	zoom(int key, t_pref *pref);
 
 #endif
