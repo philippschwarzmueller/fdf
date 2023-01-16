@@ -56,6 +56,11 @@ void	key_bindings(void *tmp)
 		zoom(MLX_KEY_LEFT_SHIFT, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_RIGHT_SHIFT))
 		zoom(MLX_KEY_RIGHT_SHIFT, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_ESCAPE))
+	{
+		mlx_delete_image(pref->mlx, pref->img);
+		mlx_close_window(pref->mlx);
+	}
 }
 
 mlx_t	*init_mlx(void)
