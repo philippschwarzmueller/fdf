@@ -52,10 +52,10 @@ void	key_bindings(void *tmp)
 		move(MLX_KEY_H, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_L))
 		move(MLX_KEY_L, pref);
-	if (mlx_is_key_down(pref->mlx, MLX_KEY_LEFT_SHIFT))
-		zoom(MLX_KEY_LEFT_SHIFT, pref);
-	if (mlx_is_key_down(pref->mlx, MLX_KEY_RIGHT_SHIFT))
-		zoom(MLX_KEY_RIGHT_SHIFT, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_UP))
+		zoom(MLX_KEY_UP, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_DOWN))
+		zoom(MLX_KEY_DOWN, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_ESCAPE))
 	{
 		mlx_delete_image(pref->mlx, pref->img);

@@ -27,9 +27,9 @@ void	move(int key, t_pref *pref)
 
 void	zoom(int key, t_pref *pref)
 {
-	if (key == MLX_KEY_LEFT_SHIFT)
+	if (key == MLX_KEY_DOWN)
 		pref->scale += 1;
-	if (key == MLX_KEY_RIGHT_SHIFT)
+	if (key == MLX_KEY_UP)
 		if (pref->scale > 0)
 			pref->scale -= 1;
 	draw_map(*pref);
