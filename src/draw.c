@@ -15,7 +15,7 @@
 static void				project(t_map *map, t_pref pref);
 static void				draw_line(t_coordinates start, t_coordinates end,
 							mlx_image_t *image);
-static t_coordinates	iso(t_coordinates coordinates, int scale,
+static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
 							int start_x, int start_y);
 static int				calculate_center(int axis_size, char axis);
 
@@ -48,18 +48,18 @@ static void	project(t_map *map, t_pref pref)
 	i = 0;
 	while (map->coords[i] != NULL && map->coords[i + 1] != NULL)
 	{
-		isostart = iso(*map->coords[i], pref.scale, pref.off_x, pref.off_y);
+		isostart = iso(*map->coords[i], pref, pref.off_x, pref.off_y);
 		if (map->coords[i]->x == map->width)
 		{
-			draw_line(isostart, iso(*map->coords[i + map->width], pref.scale,
+			draw_line(isostart, iso(*map->coords[i + map->width], pref,
 					pref.off_x, pref.off_y), pref.img);
 			i++;
-			isostart = iso(*map->coords[i], pref.scale, pref.off_x, pref.off_y);
+			isostart = iso(*map->coords[i], pref, pref.off_x, pref.off_y);
 		}
 		if (map->coords[i]->y < map->height)
-			draw_line(isostart, iso(*map->coords[i + map->width], pref.scale,
+			draw_line(isostart, iso(*map->coords[i + map->width], pref,
 					pref.off_x, pref.off_y), pref.img);
-		draw_line(isostart, iso(*map->coords[i + 1], pref.scale, pref.off_x,
+		draw_line(isostart, iso(*map->coords[i + 1], pref, pref.off_x,
 				pref.off_y), pref.img);
 		i++;
 	}
@@ -92,17 +92,17 @@ static void	draw_line(t_coordinates start, t_coordinates end,
 	}
 }
 
-static t_coordinates	iso(t_coordinates coordinates, int scale,
+static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
 							int start_x, int start_y)
 {
 	t_coordinates	res;
 	int				x;
 	int				y;
 
-	x = coordinates.x * scale;
-	y = coordinates.y * scale;
-	res.x = (x - y) * cos(0.45);
-	res.y = (-coordinates.z * scale + x + y) * sin(0.45);
+	x = coordinates.x * pref.scale;
+	y = coordinates.y * pref.scale;
+	res.x = (x - y) * cos(pref.rot_x);
+	res.y = (-coordinates.z * pref.scale + x + y) * sin(pref.rot_y);
 	res.x += start_x;
 	res.y += start_y;
 	return (res);
