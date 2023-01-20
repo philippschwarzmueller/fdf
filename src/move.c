@@ -27,10 +27,23 @@ void	move(int key, t_pref *pref)
 
 void	zoom(int key, t_pref *pref)
 {
-	if (key == MLX_KEY_DOWN)
+	if (key == MLX_KEY_J)
 		pref->scale += 1;
-	if (key == MLX_KEY_UP)
+	if (key == MLX_KEY_K)
 		if (pref->scale > 0)
 			pref->scale -= 1;
+	draw_map(*pref);
+}
+
+void	rotate(int key, t_pref *pref)
+{
+	if (key == MLX_KEY_LEFT)
+		pref->rot_x += 0.05;
+	if (key == MLX_KEY_RIGHT)
+		pref->rot_x -= 0.05;
+	if (key == MLX_KEY_UP)
+		pref->rot_y += 0.05;
+	if (key == MLX_KEY_DOWN)
+		pref->rot_y -= 0.05;
 	draw_map(*pref);
 }

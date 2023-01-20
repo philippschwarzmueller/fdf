@@ -27,6 +27,8 @@ int	main(int argc, char **argv)
 	pref.map = parse_map(argv[argc - 1]);
 	pref.mlx = init_mlx();
 	pref.scale = 10;
+	pref.rot_x = 0.45;
+	pref.rot_y = 0.45;
 	pref.img = mlx_new_image(pref.mlx, WIDTH, HEIGHT);
 	if (!pref.img || (mlx_image_to_window(pref.mlx, pref.img, 0, 0) < 0))
 		return (0);
@@ -52,10 +54,18 @@ void	key_bindings(void *tmp)
 		move(MLX_KEY_H, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_L))
 		move(MLX_KEY_L, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_J) && mlx_is_key_down(pref->mlx, MLX_KEY_LEFT_SHIFT))
+		zoom(MLX_KEY_J, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_K) && mlx_is_key_down(pref->mlx, MLX_KEY_LEFT_SHIFT))
+		zoom(MLX_KEY_K, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_LEFT))
+		rotate(MLX_KEY_LEFT, pref);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_RIGHT))
+		rotate(MLX_KEY_RIGHT, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_UP))
-		zoom(MLX_KEY_UP, pref);
+		rotate(MLX_KEY_UP, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_DOWN))
-		zoom(MLX_KEY_DOWN, pref);
+		rotate(MLX_KEY_DOWN, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_ESCAPE))
 	{
 		mlx_delete_image(pref->mlx, pref->img);

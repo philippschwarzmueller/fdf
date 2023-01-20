@@ -43,11 +43,14 @@ typedef struct s_pref
 	int			scale;
 	int			off_x;
 	int			off_y;
+	double		rot_x;
+	double		rot_y;
 }	t_pref;
 
 t_map	*parse_map(char *path);
 void	draw_map(t_pref pref);
 void	move(int key, t_pref *pref);
 void	zoom(int key, t_pref *pref);
+void	rotate(int key, t_pref *pref);
 
 #endif
