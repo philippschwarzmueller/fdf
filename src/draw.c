@@ -15,8 +15,9 @@
 static void				project(t_map *map, t_pref pref);
 static void				draw_line(t_coordinates start, t_coordinates end,
 							mlx_image_t *image);
-static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
-							int start_x, int start_y);
+/* static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
+							int start_x, int start_y); */
+static t_coordinates	one_point(t_coordinates coordinates, t_pref pref);
 static int				calculate_center(int axis_size, char axis);
 
 void	draw_map(t_pref pref)
@@ -48,19 +49,16 @@ static void	project(t_map *map, t_pref pref)
 	i = 0;
 	while (map->coords[i] != NULL && map->coords[i + 1] != NULL)
 	{
-		isostart = iso(*map->coords[i], pref, pref.off_x, pref.off_y);
+		isostart = one_point(*map->coords[i], pref);
 		if (map->coords[i]->x == map->width)
 		{
-			draw_line(isostart, iso(*map->coords[i + map->width], pref,
-					pref.off_x, pref.off_y), pref.img);
+			draw_line(isostart, one_point(*map->coords[i + map->width], pref), pref.img);
 			i++;
-			isostart = iso(*map->coords[i], pref, pref.off_x, pref.off_y);
+			isostart = one_point(*map->coords[i], pref);
 		}
 		if (map->coords[i]->y < map->height)
-			draw_line(isostart, iso(*map->coords[i + map->width], pref,
-					pref.off_x, pref.off_y), pref.img);
-		draw_line(isostart, iso(*map->coords[i + 1], pref, pref.off_x,
-				pref.off_y), pref.img);
+			draw_line(isostart, one_point(*map->coords[i + map->width], pref), pref.img);
+		draw_line(isostart, one_point(*map->coords[i + 1], pref), pref.img);
 		i++;
 	}
 }
@@ -92,7 +90,7 @@ static void	draw_line(t_coordinates start, t_coordinates end,
 	}
 }
 
-static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
+/* static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
 							int start_x, int start_y)
 {
 	t_coordinates	res;
@@ -106,4 +104,38 @@ static t_coordinates	iso(t_coordinates coordinates, t_pref pref,
 	res.x += start_x;
 	res.y += start_y;
 	return (res);
+} */
+
+static t_coordinates	one_point(t_coordinates coordinates, t_pref pref)
+{
+	t_coordinates	res;
+	int				x;
+	int				y;
+	int				z;
+
+	x = coordinates.x * pref.scale;
+	y = coordinates.y * pref.scale;
+	z = coordinates.z * pref.scale;
+	res.x = x + pref.rot_x * z * cos(pref.rot_y);
+	res.y = y + pref.rot_x * z * sin(pref.rot_y);
+	res.x += pref.off_x;
+	res.y += pref.off_y;
+	return (res);
 }
+
+/* static t_coordinates	one_point(t_coordinates coordinates, t_pref pref)
+{
+	t_coordinates	res;
+	int				x;
+	int				y;
+	int				z;
+
+	x = coordinates.x * pref.scale;
+	y = coordinates.y * pref.scale;
+	z = coordinates.z * pref.scale;
+	res.x = x * cos(pref.rot_y) + ((z * cos(pref.rot_x)) / 2);
+	res.y = y + ((z * sin(pref.rot_x)) / 2 ) - (x * sin(pref.rot_y));
+	res.x += pref.off_x;
+	res.y += pref.off_y;
+	return (res);
+} */
