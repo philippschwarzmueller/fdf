@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:44:00 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/15 18:43:43 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/21 18:16:48 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ typedef struct s_pref
 	int			off_y;
 	double		rot_x;
 	double		rot_y;
+	char		projection;
 }	t_pref;
 
-t_map	*parse_map(char *path);
-void	draw_map(t_pref pref);
-void	move(int key, t_pref *pref);
-void	zoom(int key, t_pref *pref);
-void	rotate(int key, t_pref *pref);
+t_map			*parse_map(char *path);
+void			draw_map(t_pref pref);
+void			move(int key, t_pref *pref);
+void			zoom(int key, t_pref *pref);
+void			rotate(int key, t_pref *pref);
+t_coordinates	project(t_coordinates coordinates, t_pref *pref);
 
 #endif
