@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/21 19:12:29 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:27:32 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	draw_map(t_pref pref)
 {
 	pref.off_x = calculate_center(pref.off_x, 'x');
 	pref.off_y = calculate_center(pref.off_y, 'y');
-	ft_printf("drawing map with offset x: %d y: %d projected as: %c\n", pref.off_x, pref.off_y, pref.projection);
-	ft_printf("also with: off_x %d off_y %d and scale %d", pref.off_x, pref.off_y, pref.scale);
 	ft_bzero(pref.img->pixels, WIDTH * HEIGHT * 4);
 	draw_img(pref.map, pref);
 }
@@ -83,11 +81,7 @@ static void	draw_line(t_coordinates start, t_coordinates end,
 	{
 		if (pixel_x < image->width && pixel_y < image->height
 			&& pixel_x > 0 && pixel_y > 0)
-		{
-			/* if (start.z > 10)
-				mlx_put_pixel(image, pixel_x, pixel_y, 0xDC8A78FF); */
 			mlx_put_pixel(image, pixel_x, pixel_y, 0xB7BDF8FF);
-		}
 		pixel_x += delta_x;
 		pixel_y += delta_y;
 		--pixels;
