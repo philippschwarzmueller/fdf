@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 18:06:48 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/15 19:10:22 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/22 14:04:09 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,18 @@ void	rotate(int key, t_pref *pref)
 		pref->rot_y += 0.05;
 	if (key == MLX_KEY_DOWN)
 		pref->rot_y -= 0.05;
+	draw_map(*pref);
+}
+
+void	toggle_projection(int key, t_pref *pref)
+{
+	if (key == MLX_KEY_P)
+	{
+		if (pref->projection == p_dimetric)
+			pref->projection = p_isometric;
+		else if (pref->projection == p_isometric)
+			pref->projection = p_dimetric;
+	}
+	usleep(500);
 	draw_map(*pref);
 }
