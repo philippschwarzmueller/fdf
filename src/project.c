@@ -6,7 +6,7 @@
 /*   By: pschwarz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:29:19 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/22 13:50:14 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/22 15:56:20 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static t_coordinates	isometric(t_coordinates coordinates, t_pref pref)
 	res.y = (-coordinates.z * pref.scale + x + y) * sin(pref.rot_y);
 	res.x += pref.off_x;
 	res.y += pref.off_y;
+	res.z = coordinates.z;
 	return (res);
 }
 
@@ -56,5 +57,6 @@ static t_coordinates	dimetric(t_coordinates coordinates, t_pref pref)
 	res.y = y + pref.rot_x * z * sin(pref.rot_y);
 	res.x += pref.off_x;
 	res.y += pref.off_y;
+	res.z = coordinates.z;
 	return (res);
 }
