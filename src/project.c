@@ -6,13 +6,13 @@
 /*   By: pschwarz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:29:19 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/21 18:16:38 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/22 13:50:14 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static t_coordinates	iso(t_coordinates coordinates, t_pref pref);
+static t_coordinates	isometric(t_coordinates coordinates, t_pref pref);
 static t_coordinates	dimetric(t_coordinates coordinates, t_pref pref);
 
 t_coordinates	project(t_coordinates coordinates, t_pref *pref)
@@ -20,14 +20,14 @@ t_coordinates	project(t_coordinates coordinates, t_pref *pref)
 	t_coordinates	res;
 
 	res = coordinates;
-	if (pref->projection == 'i')
-		res = iso(coordinates, *pref);
-	else if (pref->projection == 'd')
+	if (pref->projection == p_isometric)
+		res = isometric(coordinates, *pref);
+	else if (pref->projection == p_dimetric)
 		res = dimetric(coordinates, *pref);
 	return (res);
 }
 
-static t_coordinates	iso(t_coordinates coordinates, t_pref pref)
+static t_coordinates	isometric(t_coordinates coordinates, t_pref pref)
 {
 	t_coordinates	res;
 	int				x;
