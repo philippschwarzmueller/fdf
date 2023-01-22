@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 08:35:13 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/22 14:27:32 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:31:12 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void				draw_img(t_map *map, t_pref pref);
 static void				draw_line(t_coordinates start, t_coordinates end,
 							mlx_image_t *image);
 static int				calculate_center(int axis_size, char axis);
+static void				set_pixel(int colored, mlx_image_t *image,
+							double pixel_x, double pixel_y);
 
 void	draw_map(t_pref pref)
 {
@@ -79,11 +81,25 @@ static void	draw_line(t_coordinates start, t_coordinates end,
 	pixel_y = start.y;
 	while (pixels)
 	{
-		if (pixel_x < image->width && pixel_y < image->height
-			&& pixel_x > 0 && pixel_y > 0)
-			mlx_put_pixel(image, pixel_x, pixel_y, 0xB7BDF8FF);
+		if (start.z == end.z)
+			set_pixel(1, image, pixel_x, pixel_y);
+		else
+			set_pixel(0, image, pixel_x, pixel_y);
 		pixel_x += delta_x;
 		pixel_y += delta_y;
 		--pixels;
+	}
+}
+
+static void	set_pixel(int colored, mlx_image_t *image, double pixel_x,
+		double pixel_y)
+{
+	if (pixel_x < image->width && pixel_y < image->height
+		&& pixel_x > 0 && pixel_y > 0)
+	{
+		if (colored != 0)
+			mlx_put_pixel(image, pixel_x, pixel_y, 0xB7BDF8FF);
+		else
+			mlx_put_pixel(image, pixel_x, pixel_y, 0xDC8A78FF);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/22 14:33:25 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:33:42 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 mlx_t	*init_mlx(void);
 void	close_hook(mlx_key_data_t keydata, void *param);
 void	key_bindings(void *tmp);
-void	toggle(mlx_key_data_t keydata, void *tmp);
+void	toggles(mlx_key_data_t keydata, void *tmp);
 
 int	main(int argc, char **argv)
 {
@@ -30,13 +30,13 @@ int	main(int argc, char **argv)
 	pref.scale = 10;
 	pref.rot_x = 0.45;
 	pref.rot_y = 0.45;
-	pref.projection = p_dimetric;
+	pref.projection = p_isometric;
 	pref.img = mlx_new_image(pref.mlx, WIDTH, HEIGHT);
 	if (!pref.img || (mlx_image_to_window(pref.mlx, pref.img, 0, 0) < 0))
 		return (0);
 	draw_map(pref);
 	mlx_loop_hook(pref.mlx, &key_bindings, &pref);
-	mlx_key_hook(pref.mlx, &toggle, &pref);
+	mlx_key_hook(pref.mlx, &toggles, &pref);
 	mlx_loop(pref.mlx);
 	mlx_terminate(pref.mlx);
 	free(pref.map->coords);
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-void	toggle(mlx_key_data_t keydata, void *tmp)
+void	toggles(mlx_key_data_t keydata, void *tmp)
 {
 	t_pref	*pref;
 
