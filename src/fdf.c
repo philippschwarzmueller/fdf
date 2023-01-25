@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/22 16:33:42 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:44:13 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	toggles(mlx_key_data_t keydata, void *tmp);
 int	main(int argc, char **argv)
 {
 	t_pref	pref;
+	int		i;
 
 	if (argc != 2)
 		return (0);
@@ -39,8 +40,15 @@ int	main(int argc, char **argv)
 	mlx_key_hook(pref.mlx, &toggles, &pref);
 	mlx_loop(pref.mlx);
 	mlx_terminate(pref.mlx);
+	i = 0;
+	while (pref.map->coords[i] != NULL)
+	{
+		free(pref.map->coords[i]);
+		i++;
+	}
 	free(pref.map->coords);
 	free(pref.map);
+	system("leaks fdf");
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/13 17:47:19 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:42:32 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_map	*parse_map(char *path)
 {
 	t_map	*res;
 	char	**mapstring;
+	int		i;
 
 	res = malloc(sizeof(t_map));
 	if (!res)
@@ -33,6 +34,12 @@ t_map	*parse_map(char *path)
 	if (!res)
 		return (free(mapstring), NULL);
 	populate_map(mapstring, res->coords);
+	i = 0;
+	while (mapstring[i] != NULL)
+	{
+		free(mapstring[i]);
+		i++;
+	}
 	free(mapstring);
 	return (res);
 }
@@ -42,27 +49,37 @@ static void	populate_map(char **mapstring, t_coordinates **map)
 	int		line;
 	int		column;
 	int		i;
+	int		k;
 	char	**line_strings;
+	char	*curr_line;
 
 	line = 0;
 	column = 0;
 	i = 0;
 	while (mapstring[line] != NULL)
 	{
-		line_strings = ft_split(ft_strtrim(mapstring[line], "\n"), ' ');
+		curr_line = ft_strtrim(mapstring[line], "\n");
+		line_strings = ft_split(curr_line, ' ');
+		free(curr_line);
 		while (line_strings[column] != NULL)
 		{
-			map[i] = malloc(sizeof(t_coordinates) * 1);
+			map[i] = malloc(sizeof(t_coordinates));
 			map[i]->x = column + 1;
 			map[i]->y = line + 1;
 			map[i]->z = ft_atoi(line_strings[column]);
 			column++;
 			i++;
 		}
+		k = 0;
+		while (line_strings[k] != NULL)
+		{
+			free(line_strings[k]);
+			k++;
+		}
+		free(line_strings);
 		column = 0;
 		line++;
 	}
-	free(line_strings);
 	map[i] = NULL;
 }
 
@@ -79,10 +96,9 @@ static char	**read_file_to_strings(char *path, int height)
 	fd = open(path, O_RDONLY);
 	i = 0;
 	curr_str = " ";
-	while (i < height && curr_str != NULL)
+	while (i < height)
 	{
-		curr_str = get_next_line(fd);
-		contents[i] = curr_str;
+		contents[i] = get_next_line(fd);
 		i++;
 	}
 	contents[i] = NULL;
@@ -104,6 +120,7 @@ static int	count_newlines(char *path)
 		str_helper = get_next_line(fd);
 		if (str_helper)
 			line_count++;
+		free(str_helper);
 	}
 	close(fd);
 	return (line_count);
@@ -129,5 +146,6 @@ static int	count_words(char const *s)
 				i++;
 		}
 	}
+	free(trimmed_s);
 	return (res);
 }
