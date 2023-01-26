@@ -6,13 +6,13 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/25 13:44:13 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:07:02 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-mlx_t	*init_mlx(void);
+mlx_t	*init_mlx(t_pref *pref);
 void	close_hook(mlx_key_data_t keydata, void *param);
 void	key_bindings(void *tmp);
 void	toggles(mlx_key_data_t keydata, void *tmp);
@@ -24,17 +24,11 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
-	pref.off_x = 0;
-	pref.off_y = 0;
-	pref.map = parse_map(argv[argc - 1]);
-	pref.mlx = init_mlx();
-	pref.scale = 10;
-	pref.rot_x = 0.45;
-	pref.rot_y = 0.45;
-	pref.projection = p_isometric;
+	pref.mlx = init_mlx(&pref);
 	pref.img = mlx_new_image(pref.mlx, WIDTH, HEIGHT);
 	if (!pref.img || (mlx_image_to_window(pref.mlx, pref.img, 0, 0) < 0))
 		return (0);
+	pref.map = parse_map(argv[argc - 1]);
 	draw_map(pref);
 	mlx_loop_hook(pref.mlx, &key_bindings, &pref);
 	mlx_key_hook(pref.mlx, &toggles, &pref);
@@ -95,10 +89,16 @@ void	key_bindings(void *tmp)
 		rotate(MLX_KEY_DOWN, pref);
 }
 
-mlx_t	*init_mlx(void)
+mlx_t	*init_mlx(t_pref *pref)
 {
 	mlx_t	*mlx;
 
 	mlx = mlx_init(WIDTH, HEIGHT, "fdf", false);
+	pref->off_x = 0;
+	pref->off_y = 0;
+	pref->scale = 10;
+	pref->rot_x = 0.45;
+	pref->rot_y = 0.45;
+	pref->projection = p_isometric;
 	return (mlx);
 }
