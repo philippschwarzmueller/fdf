@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/26 17:38:59 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/27 09:09:22 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,13 @@ static void	populate_map(char **mapstring, t_coordinates **map)
 	int		column;
 	int		i;
 	char	**line_strings;
-	char	*curr_line;
 
 	line = 0;
 	column = 0;
 	i = 0;
 	while (mapstring[line] != NULL)
 	{
-		curr_line = ft_strtrim(mapstring[line], "\n");
-		line_strings = ft_split(mapstring[line], ' ');
-		free(curr_line);
+		line_strings = ft_trimsplit(mapstring[line]);
 		while (line_strings[column] != NULL)
 		{
 			map[i] = malloc(sizeof(t_coordinates));
@@ -61,9 +58,9 @@ static void	populate_map(char **mapstring, t_coordinates **map)
 			column++;
 			i++;
 		}
+		ft_freestra(line_strings);
 		column = 0;
 		line++;
-		ft_freestra(line_strings);
 	}
 }
 
