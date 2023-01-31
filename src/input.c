@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/27 09:09:22 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:31:01 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_map	*parse_map(char *path)
 	res->width = count_words(mapstring[0]);
 	res->coords = ft_calloc(res->height * res->width, sizeof(t_coordinates *));
 	if (!res)
-		return (free(mapstring), NULL);
+		return (ft_freestra(mapstring), NULL);
 	populate_map(mapstring, res->coords);
 	ft_freestra(mapstring);
 	return (res);
