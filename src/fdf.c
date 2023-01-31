@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/26 17:07:02 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/01/31 10:21:24 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	main(int argc, char **argv)
 	}
 	free(pref.map->coords);
 	free(pref.map);
-	system("leaks fdf");
 	return (0);
 }
 
