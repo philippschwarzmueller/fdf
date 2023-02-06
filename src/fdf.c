@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/31 10:21:24 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/02/06 08:19:57 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char **argv)
 	if (!pref.img || (mlx_image_to_window(pref.mlx, pref.img, 0, 0) < 0))
 		return (0);
 	pref.map = parse_map(argv[argc - 1]);
+	if (!pref.map)
+		return (mlx_terminate(pref.mlx), 1);
 	draw_map(pref);
 	mlx_loop_hook(pref.mlx, &key_bindings, &pref);
 	mlx_key_hook(pref.mlx, &toggles, &pref);
@@ -40,9 +42,7 @@ int	main(int argc, char **argv)
 		free(pref.map->coords[i]);
 		i++;
 	}
-	free(pref.map->coords);
-	free(pref.map);
-	return (0);
+	return (free(pref.map->coords), free(pref.map), 0);
 }
 
 void	toggles(mlx_key_data_t keydata, void *tmp)
