@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:13:49 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/31 10:46:39 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/02/06 08:15:20 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ t_map	*parse_map(char *path)
 {
 	t_map	*res;
 	char	**mapstring;
+	int		check_file;
 
+	check_file = open(path, O_RDONLY);
+	if (check_file < 0)
+		return (close(check_file), NULL);
+	close(check_file);
 	res = malloc(sizeof(t_map));
 	if (!res)
 		return (NULL);
