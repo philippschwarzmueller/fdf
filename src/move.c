@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 18:06:48 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/01/22 14:04:09 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/02/06 08:34:22 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ void	zoom(int key, t_pref *pref)
 	if (key == MLX_KEY_J)
 		pref->scale += 1;
 	if (key == MLX_KEY_K)
-		if (pref->scale > 0)
-			pref->scale -= 1;
+	{
+		pref->scale -= 1;
+		if (pref->scale < 1)
+			pref->scale = 1;
+	}
 	draw_map(*pref);
 }
 

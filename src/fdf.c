@@ -6,7 +6,7 @@
 /*   By: pschwarz <pschwarz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 15:08:16 by pschwarz          #+#    #+#             */
-/*   Updated: 2023/02/06 08:19:57 by pschwarz         ###   ########.fr       */
+/*   Updated: 2023/02/06 08:44:25 by pschwarz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,21 @@ void	toggles(mlx_key_data_t keydata, void *tmp)
 void	key_bindings(void *tmp)
 {
 	t_pref	*pref;
+	int		shift_down;
 
 	pref = (t_pref *) tmp;
-	if (mlx_is_key_down(pref->mlx, MLX_KEY_J))
+	shift_down = mlx_is_key_down(pref->mlx, MLX_KEY_LEFT_SHIFT);
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_J) && !shift_down)
 		move(MLX_KEY_J, pref);
-	if (mlx_is_key_down(pref->mlx, MLX_KEY_K))
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_K) && !shift_down)
 		move(MLX_KEY_K, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_H))
 		move(MLX_KEY_H, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_L))
 		move(MLX_KEY_L, pref);
-	if (mlx_is_key_down(pref->mlx, MLX_KEY_J)
-		&& mlx_is_key_down(pref->mlx, MLX_KEY_LEFT_SHIFT))
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_J) && shift_down)
 		zoom(MLX_KEY_J, pref);
-	if (mlx_is_key_down(pref->mlx, MLX_KEY_K)
-		&& mlx_is_key_down(pref->mlx, MLX_KEY_LEFT_SHIFT))
+	if (mlx_is_key_down(pref->mlx, MLX_KEY_K) && shift_down)
 		zoom(MLX_KEY_K, pref);
 	if (mlx_is_key_down(pref->mlx, MLX_KEY_LEFT))
 		rotate(MLX_KEY_LEFT, pref);
