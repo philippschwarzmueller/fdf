@@ -1,7 +1,7 @@
 # fdf
 This project is about creating a simple wireframe model representation of a 3D landscape by linking various points (x, y, z) thanks to line segments (edges).
 
-![alt text](https://github.com/philippschwarzmueller/fdf/test_maps/fdf_showcase.jpg "fdf showcase")
+![alt text](https://github.com/philippschwarzmueller/fdf/blob/master/test_maps/fdf_showcase.jpg "fdf showcase")
 
 ## how it works
 1. When running the program you pass it a path to a .fdf file
