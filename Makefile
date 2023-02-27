@@ -23,9 +23,6 @@ OBJ = $(SRC:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX42) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) -o $(NAME) -I include -lglfw -L "$(HOME)/.brew/opt/glfw/lib/"
-
-extern: dependencies $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX42) -o $(NAME) -lglfw
 
 dependencies: $(LIBFT) $(MLX42)
